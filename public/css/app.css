@@ -1,0 +1,984 @@
+/* =================================================================
+   fastLANE — Main Stylesheet
+   Dark theme · Bebas Neue display · DM Sans body
+   ================================================================= */
+
+/* ----- RESET & BASE --------------------------------------------- */
+*, *::before, *::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+:root {
+    --black:    #0a0a0a;
+    --white:    #f5f5f0;
+    --yellow:   #f5c400;
+    --yellow-d: #e0b200;
+    --gray:     #1e1e1e;
+    --gray-2:   #2a2a2a;
+    --gray-3:   #3a3a3a;
+    --gray-lt:  #888888;
+    --red:      #e03c3c;
+    --green:    #2ecc71;
+    --radius:   6px;
+    --shadow:   0 4px 24px rgba(0, 0, 0, 0.4);
+}
+
+body {
+    font-family: 'DM Sans', sans-serif;
+    background-color: var(--black);
+    color: var(--white);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    line-height: 1.6;
+}
+
+/* ----- NAVBAR --------------------------------------------------- */
+.navbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 2rem;
+    height: 64px;
+    background: var(--gray);
+    border-bottom: 2px solid var(--yellow);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+
+.nav-brand {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 2rem;
+    color: var(--white);
+    text-decoration: none;
+    letter-spacing: 1px;
+    flex-shrink: 0;
+}
+.nav-brand span {
+    color: var(--yellow);
+}
+
+.nav-links {
+    list-style: none;
+    display: flex;
+    align-items: center;
+    gap: 0.2rem;
+}
+
+.nav-links a {
+    display: block;
+    color: var(--gray-lt);
+    text-decoration: none;
+    padding: 0.45rem 0.9rem;
+    border-radius: var(--radius);
+    font-size: 0.88rem;
+    font-weight: 500;
+    transition: color 0.18s, background 0.18s;
+    white-space: nowrap;
+}
+.nav-links a:hover {
+    color: var(--white);
+    background: var(--gray-2);
+}
+.nav-links a.active {
+    color: var(--yellow);
+    background: rgba(245, 196, 0, 0.12);
+    font-weight: 600;
+}
+
+.nav-btn-logout {
+    background: transparent;
+    border: 1px solid var(--gray-3);
+    color: var(--gray-lt);
+    padding: 0.45rem 0.9rem;
+    border-radius: var(--radius);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.88rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: border-color 0.18s, color 0.18s;
+    white-space: nowrap;
+}
+.nav-btn-logout:hover {
+    border-color: var(--red);
+    color: var(--red);
+}
+
+/* ----- MAIN CONTENT --------------------------------------------- */
+.main-content {
+    flex: 1;
+    padding: 2rem;
+    max-width: 1100px;
+    width: 100%;
+    margin: 0 auto;
+}
+
+/* ----- FLASH ALERTS --------------------------------------------- */
+.alert {
+    padding: 0.85rem 1.25rem;
+    border-radius: var(--radius);
+    margin-bottom: 1.5rem;
+    font-size: 0.9rem;
+    font-weight: 500;
+}
+.alert-success {
+    background: rgba(46, 204, 113, 0.12);
+    border: 1px solid var(--green);
+    color: var(--green);
+}
+.alert-error {
+    background: rgba(224, 60, 60, 0.12);
+    border: 1px solid var(--red);
+    color: var(--red);
+}
+
+/* ----- FOOTER --------------------------------------------------- */
+.footer {
+    text-align: center;
+    padding: 1.25rem 2rem;
+    color: var(--gray-lt);
+    font-size: 0.8rem;
+    border-top: 1px solid var(--gray-2);
+}
+
+/* ----- PAGE HEADER ---------------------------------------------- */
+.page-header {
+    margin-bottom: 2rem;
+}
+.page-header h1 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 2.6rem;
+    letter-spacing: 1px;
+    line-height: 1;
+}
+.page-header p {
+    color: var(--gray-lt);
+    margin-top: 0.4rem;
+    font-size: 0.92rem;
+}
+.page-header strong {
+    color: var(--white);
+}
+
+/* ----- HERO ----------------------------------------------------- */
+.hero {
+    text-align: center;
+    padding: 5rem 2rem;
+    border-radius: 12px;
+    background: linear-gradient(135deg, var(--gray) 0%, var(--gray-2) 100%);
+    border: 1px solid var(--gray-2);
+    margin-bottom: 2.5rem;
+}
+.hero h1 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 5rem;
+    letter-spacing: 3px;
+    line-height: 1;
+    margin-bottom: 1rem;
+}
+.hero h1 span {
+    color: var(--yellow);
+}
+.hero p {
+    color: var(--gray-lt);
+    max-width: 480px;
+    margin: 0 auto 2rem;
+    font-size: 1rem;
+}
+
+/* ----- BUTTONS -------------------------------------------------- */
+.btn {
+    display: inline-block;
+    padding: 0.65rem 1.4rem;
+    border-radius: var(--radius);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.9rem;
+    font-weight: 600;
+    text-decoration: none;
+    border: none;
+    cursor: pointer;
+    transition: background 0.18s, color 0.18s, border-color 0.18s;
+    white-space: nowrap;
+}
+.btn-primary {
+    background: var(--yellow);
+    color: var(--black);
+}
+.btn-primary:hover {
+    background: var(--yellow-d);
+}
+.btn-secondary {
+    background: var(--gray-2);
+    color: var(--white);
+    border: 1px solid var(--gray-3);
+}
+.btn-secondary:hover {
+    background: var(--gray-3);
+}
+.btn-danger {
+    background: transparent;
+    color: var(--red);
+    border: 1px solid var(--red);
+}
+.btn-danger:hover {
+    background: rgba(224, 60, 60, 0.1);
+}
+.btn-sm {
+    padding: 0.38rem 0.85rem;
+    font-size: 0.8rem;
+}
+.btn-full {
+    width: 100%;
+    text-align: center;
+    display: block;
+    margin-top: 0.5rem;
+}
+
+/* ----- STATS GRID ----------------------------------------------- */
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(190px, 1fr));
+    gap: 1rem;
+    margin-bottom: 2.5rem;
+}
+.stat-card {
+    background: var(--gray);
+    border: 1px solid var(--gray-2);
+    border-radius: 10px;
+    padding: 1.4rem 1.6rem;
+}
+.stat-label {
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.6px;
+    color: var(--gray-lt);
+    margin-bottom: 0.4rem;
+}
+.stat-value {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 2.8rem;
+    color: var(--yellow);
+    line-height: 1;
+}
+.stat-sub {
+    font-size: 0.78rem;
+    color: var(--gray-lt);
+    margin-top: 0.25rem;
+}
+
+/* ----- SECTION HEADER ------------------------------------------ */
+.section-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 1.25rem;
+}
+.section-header h2 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.8rem;
+    letter-spacing: 0.5px;
+}
+
+/* ----- CARS GRID ------------------------------------------------ */
+.cars-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 1.25rem;
+}
+
+.car-card {
+    background: var(--gray);
+    border: 1px solid var(--gray-2);
+    border-radius: 10px;
+    overflow: hidden;
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+.car-card:hover {
+    transform: translateY(-3px);
+    box-shadow: var(--shadow);
+}
+
+.car-card-img {
+    width: 100%;
+    height: 160px;
+    background: var(--gray-2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 3rem;
+    border-bottom: 1px solid var(--gray-2);
+}
+
+.car-card-body {
+    padding: 1.1rem 1.2rem;
+}
+.car-card-body h3 {
+    font-size: 1.05rem;
+    font-weight: 600;
+    margin-bottom: 0.25rem;
+}
+.plate {
+    font-size: 0.76rem;
+    color: var(--gray-lt);
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    margin-bottom: 0.6rem;
+}
+.price {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.6rem;
+    color: var(--yellow);
+    line-height: 1;
+    margin-top: 0.5rem;
+}
+.price span {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.8rem;
+    color: var(--gray-lt);
+    font-weight: 400;
+}
+.car-desc {
+    font-size: 0.82rem;
+    color: var(--gray-lt);
+    margin-top: 0.6rem;
+    line-height: 1.5;
+}
+
+/* Status badges */
+.car-card-badge {
+    display: inline-block;
+    padding: 0.18rem 0.6rem;
+    border-radius: 4px;
+    font-size: 0.7rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+.badge-available {
+    background: rgba(46, 204, 113, 0.12);
+    border: 1px solid var(--green);
+    color: var(--green);
+}
+.badge-rented {
+    background: rgba(224, 60, 60, 0.12);
+    border: 1px solid var(--red);
+    color: var(--red);
+}
+
+/* Car card action buttons */
+.car-card-actions {
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+    margin-top: 0.85rem;
+    padding-top: 0.85rem;
+    border-top: 1px solid var(--gray-2);
+}
+
+/* ----- TABLE ---------------------------------------------------- */
+.table-wrap {
+    background: var(--gray);
+    border: 1px solid var(--gray-2);
+    border-radius: 10px;
+    overflow: hidden;
+    overflow-x: auto;
+}
+table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.88rem;
+}
+thead {
+    background: var(--gray-2);
+}
+thead th {
+    padding: 0.9rem 1rem;
+    text-align: left;
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.6px;
+    color: var(--gray-lt);
+    white-space: nowrap;
+}
+tbody tr {
+    border-bottom: 1px solid var(--gray-2);
+    transition: background 0.15s;
+}
+tbody tr:last-child {
+    border-bottom: none;
+}
+tbody tr:hover {
+    background: rgba(255, 255, 255, 0.03);
+}
+tbody td {
+    padding: 0.9rem 1rem;
+    vertical-align: middle;
+}
+.mono {
+    font-family: 'Courier New', monospace;
+    letter-spacing: 1px;
+    font-size: 0.82rem;
+}
+.empty-td {
+    text-align: center;
+    color: var(--gray-lt);
+    padding: 2.5rem 1rem !important;
+}
+.action-btns {
+    display: flex;
+    gap: 0.4rem;
+    align-items: center;
+}
+
+/* ----- FORMS ---------------------------------------------------- */
+.form-card {
+    background: var(--gray);
+    border: 1px solid var(--gray-2);
+    border-radius: 10px;
+    padding: 2rem;
+    max-width: 580px;
+}
+
+.form-group {
+    margin-bottom: 1.1rem;
+}
+.form-group label {
+    display: block;
+    font-size: 0.8rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: var(--gray-lt);
+    margin-bottom: 0.45rem;
+}
+.optional {
+    font-weight: 400;
+    text-transform: none;
+    letter-spacing: 0;
+    color: var(--gray-lt);
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea {
+    width: 100%;
+    padding: 0.65rem 0.9rem;
+    background: var(--black);
+    border: 1px solid var(--gray-3);
+    border-radius: var(--radius);
+    color: var(--white);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.9rem;
+    transition: border-color 0.18s;
+    outline: none;
+}
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+    border-color: var(--yellow);
+}
+.form-group input::placeholder,
+.form-group textarea::placeholder {
+    color: var(--gray-lt);
+}
+.form-group textarea {
+    resize: vertical;
+    min-height: 100px;
+}
+.form-group select option {
+    background: var(--gray);
+    color: var(--white);
+}
+
+/* Two-column row inside form */
+.form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+}
+
+.form-error {
+    color: var(--red);
+    font-size: 0.78rem;
+    margin-top: 0.3rem;
+}
+.form-actions {
+    display: flex;
+    gap: 0.75rem;
+    margin-top: 1.5rem;
+    padding-top: 1.25rem;
+    border-top: 1px solid var(--gray-2);
+}
+.form-remember {
+    margin-bottom: 1.25rem;
+}
+.form-remember label {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.85rem;
+    color: var(--gray-lt);
+    cursor: pointer;
+}
+.form-remember input[type="checkbox"] {
+    width: auto;
+    accent-color: var(--yellow);
+}
+
+/* ----- AUTH PAGES ----------------------------------------------- */
+.auth-wrapper {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem;
+    min-height: calc(100vh - 64px - 58px);
+}
+.auth-card {
+    background: var(--gray);
+    border: 1px solid var(--gray-2);
+    border-radius: 12px;
+    padding: 2.5rem;
+    width: 100%;
+    max-width: 420px;
+}
+.auth-brand {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 2.5rem;
+    text-align: center;
+    margin-bottom: 0.2rem;
+    letter-spacing: 1px;
+}
+.auth-brand span {
+    color: var(--yellow);
+}
+.auth-subtitle {
+    color: var(--gray-lt);
+    font-size: 0.88rem;
+    text-align: center;
+    margin-bottom: 2rem;
+}
+.auth-footer {
+    text-align: center;
+    margin-top: 1.5rem;
+    font-size: 0.85rem;
+    color: var(--gray-lt);
+}
+.auth-footer a {
+    color: var(--yellow);
+    text-decoration: none;
+    font-weight: 600;
+}
+.auth-footer a:hover {
+    text-decoration: underline;
+}
+
+/* ----- ROLE BADGE ----------------------------------------------- */
+.role-badge {
+    display: inline-block;
+    padding: 0.2rem 0.65rem;
+    border-radius: 4px;
+    font-size: 0.7rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    vertical-align: middle;
+}
+.role-admin {
+    background: rgba(245, 196, 0, 0.12);
+    border: 1px solid var(--yellow);
+    color: var(--yellow);
+}
+.role-user {
+    background: rgba(136, 136, 136, 0.12);
+    border: 1px solid #555;
+    color: var(--gray-lt);
+}
+
+/* ----- EMPTY STATE ---------------------------------------------- */
+.empty-state {
+    text-align: center;
+    padding: 4rem 1rem;
+    color: var(--gray-lt);
+}
+.empty-state .icon {
+    font-size: 3.5rem;
+    margin-bottom: 1rem;
+    display: block;
+}
+.empty-state p {
+    font-size: 0.95rem;
+}
+
+/* ----- ERROR PAGES ---------------------------------------------- */
+.error-page {
+    text-align: center;
+    padding: 5rem 1rem;
+}
+.error-code {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 8rem;
+    color: var(--yellow);
+    line-height: 1;
+}
+.error-page h2 {
+    font-size: 1.5rem;
+    margin: 0.5rem 0 0.75rem;
+}
+.error-page p {
+    color: var(--gray-lt);
+    margin-bottom: 2rem;
+    font-size: 0.95rem;
+}
+
+/* ----- RESPONSIVE ----------------------------------------------- */
+@media (max-width: 768px) {
+    .navbar {
+        padding: 0 1rem;
+        flex-wrap: wrap;
+        height: auto;
+        padding-top: 0.75rem;
+        padding-bottom: 0.75rem;
+        gap: 0.5rem;
+    }
+    .nav-links {
+        flex-wrap: wrap;
+        gap: 0.15rem;
+    }
+    .main-content {
+        padding: 1.25rem 1rem;
+    }
+    .hero h1 {
+        font-size: 3.2rem;
+    }
+    .form-row {
+        grid-template-columns: 1fr;
+    }
+    .auth-card {
+        padding: 1.75rem 1.25rem;
+    }
+}
+
+/* =================================================================
+   CAR IMAGES
+   ================================================================= */
+
+/* Card image — real photo */
+.car-card-img {
+    width: 100%;
+    height: 160px;
+    object-fit: cover;
+    display: block;
+    border-bottom: 1px solid var(--gray-2);
+}
+
+/* Placeholder when no image */
+.car-img-placeholder {
+    width: 100%;
+    height: 160px;
+    background: var(--gray-2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 3rem;
+    border-bottom: 1px solid var(--gray-2);
+}
+
+/* ----- IMAGE SECTION IN FORMS ----------------------------------- */
+.image-section {
+    margin-top: 1.5rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--gray-2);
+}
+.image-section-title {
+    font-size: 0.8rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: var(--gray-lt);
+    margin-bottom: 1rem;
+}
+
+/* File upload drop zone */
+.file-upload-wrap {
+    border: 2px dashed var(--gray-3);
+    border-radius: var(--radius);
+    cursor: pointer;
+    overflow: hidden;
+    transition: border-color 0.2s;
+    background: var(--black);
+}
+.file-upload-wrap:hover {
+    border-color: var(--yellow);
+}
+.file-upload-label {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 0.3rem;
+    padding: 2rem 1rem;
+    color: var(--gray-lt);
+    font-size: 0.85rem;
+    text-align: center;
+    pointer-events: none;
+}
+.upload-icon {
+    font-size: 2rem;
+    margin-bottom: 0.25rem;
+}
+.file-upload-label small {
+    font-size: 0.75rem;
+    color: #555;
+}
+
+/* Preview inside upload zone */
+.image-preview {
+    width: 100%;
+    max-height: 220px;
+    object-fit: cover;
+    display: block;
+}
+
+/* Divider between upload and URL */
+.image-or {
+    text-align: center;
+    color: var(--gray-lt);
+    font-size: 0.8rem;
+    margin: 1rem 0;
+    position: relative;
+}
+
+/* Current image on edit page */
+.current-image-wrap {
+    margin-bottom: 1rem;
+}
+.current-image-label {
+    font-size: 0.78rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: var(--gray-lt);
+    margin-bottom: 0.4rem;
+}
+.current-image {
+    width: 100%;
+    max-height: 200px;
+    object-fit: cover;
+    border-radius: var(--radius);
+    border: 1px solid var(--gray-2);
+    display: block;
+}
+
+/* Admin table images - smaller and consistent */
+.table-thumb {
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+    border-radius: 8px;
+    display: block;
+}
+
+.table-thumb-placeholder {
+    width: 100px;
+    height: 100px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #f0f0f0;
+    border-radius: 8px;
+    font-size: 24px;
+}
+
+/* User card images - balanced size */
+.car-card-img {
+    width: 100%;
+    height: 180px;
+    object-fit: cover;
+    border-top-left-radius: 12px;
+    border-top-right-radius: 12px;
+}
+
+/* For smaller screens */
+@media (max-width: 768px) {
+    .car-card-img {
+        height: 160px;
+    }
+    
+    .table-thumb {
+        width: 40px;
+        height: 40px;
+    }
+}
+
+/* Add to your CSS file */
+.rentals-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
+    gap: 1.5rem;
+    margin-top: 1.5rem;
+}
+
+.rental-card {
+    background: white;
+    border-radius: 12px;
+    padding: 1.5rem;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    border-left: 4px solid #ccc;
+}
+
+.rental-card.active {
+    border-left-color: #28a745;
+}
+
+.rental-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+}
+
+.rental-header h3 {
+    margin: 0;
+    font-size: 1.25rem;
+}
+
+.status-badge {
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 0.875rem;
+    font-weight: 600;
+}
+
+.status-active { background: #d4edda; color: #155724; }
+.status-completed { background: #d1ecf1; color: #0c5460; }
+.status-cancelled { background: #f8d7da; color: #721c24; }
+.status-overdue { background: #f8d7da; color: #dc3545; }
+
+.countdown-timer {
+    background: #f8f9fa;
+    padding: 1rem;
+    border-radius: 8px;
+    margin: 1rem 0;
+    text-align: center;
+}
+
+.timer-label {
+    font-size: 0.875rem;
+    color: #6c757d;
+    margin-bottom: 0.5rem;
+}
+
+.timer-display {
+    font-size: 1.25rem;
+    font-weight: bold;
+    color: #007bff;
+    font-family: monospace;
+}
+
+.big-countdown {
+    text-align: center;
+    padding: 1rem;
+}
+
+.countdown-display {
+    font-size: 2rem;
+    font-weight: bold;
+    color: #007bff;
+    font-family: monospace;
+}
+
+.progress-section {
+    margin-top: 1rem;
+}
+
+.progress-bar {
+    background: #e9ecef;
+    border-radius: 10px;
+    overflow: hidden;
+    height: 8px;
+}
+
+.progress-fill {
+    background: #28a745;
+    height: 100%;
+    transition: width 0.3s ease;
+}
+
+.progress-text {
+    font-size: 0.75rem;
+    color: #6c757d;
+    margin-top: 0.25rem;
+}
+
+.rental-actions {
+    display: flex;
+    gap: 0.5rem;
+    margin-top: 1rem;
+}
+
+.inline-form {
+    display: inline;
+}
+
+.details-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+}
+
+.details-card {
+    background: white;
+    border-radius: 12px;
+    padding: 1.5rem;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+.car-image {
+    width: 100%;
+    max-height: 200px;
+    object-fit: cover;
+    border-radius: 8px;
+    margin-bottom: 1rem;
+}
+
+.info-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+.info-item {
+    display: flex;
+    justify-content: space-between;
+    padding: 0.5rem 0;
+    border-bottom: 1px solid #e9ecef;
+}
+
+.info-item .label {
+    font-weight: 600;
+    color: #6c757d;
+}
+
+.total-price {
+    font-size: 1.25rem;
+    font-weight: bold;
+    color: #28a745;
+}
+
+.btn-large {
+    padding: 0.75rem 1.5rem;
+    font-size: 1rem;
+}
+
+.action-buttons {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+}
