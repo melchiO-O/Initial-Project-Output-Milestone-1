@@ -17,18 +17,18 @@
 {{-- Stats --}}
 <div class="stats-grid">
     <div class="stat-card">
-        <div class="stat-label">Total Cars</div>
+        <div class="stat-label" style="color: var(--yellow);">Total Cars</div>
         <div class="stat-value">{{ $totalCars }}</div>
         <div class="stat-sub">In our fleet</div>
     </div>
     <div class="stat-card">
-        <div class="stat-label">Available Now</div>
-        <div class="stat-value">{{ $availableCars }}</div>
+        <div class="stat-label" style="color: var(--green);">Available Now</div>
+        <div class="stat-value" style="color: var(--green);">{{ $availableCars }}</div>
         <div class="stat-sub">Ready to rent</div>
     </div>
     <div class="stat-card">
-        <div class="stat-label">Car Brands</div>
-        <div class="stat-value">{{ $brands }}</div>
+        <div class="stat-label" style="color: var(--red);">Car Brands</div>
+        <div class="stat-value" style="color: var(--red);">{{ $brands }}</div>
         <div class="stat-sub">To choose from</div>
     </div>
 </div>

@@ -16,24 +16,24 @@
 {{-- Stats --}}
 <div class="stats-grid">
     <div class="stat-card">
-        <div class="stat-label">Total Cars</div>
-        <div class="stat-value">{{ $totalCars }}</div>
+        <div class="stat-label" style="color: var(--yellow);">Total Cars</div>
+        <div class="stat-value" style="color: var(--yellow);">{{ $totalCars }}</div>
         <div class="stat-sub">In the fleet</div>
     </div>
     <div class="stat-card">
-        <div class="stat-label">Available</div>
-        <div class="stat-value">{{ $availableCars }}</div>
+        <div class="stat-label" style="color: var(--green);">Available</div>
+        <div class="stat-value" style="color: var(--green);">{{ $availableCars }}</div>
         <div class="stat-sub">Ready to rent</div>
     </div>
     <div class="stat-card">
-        <div class="stat-label">Rented</div>
-        <div class="stat-value">{{ $rentedCars }}</div>
+        <div class="stat-label" style="color: var(--red);">Rented</div>
+        <div class="stat-value" style="color: var(--red);">{{ $rentedCars }}</div>
         <div class="stat-sub">Currently out</div>
     </div>
     @if(auth()->user()->isAdmin())
         <div class="stat-card">
-            <div class="stat-label">Total Users</div>
-            <div class="stat-value">{{ $totalUsers }}</div>
+            <div class="stat-label" style="color: var(--blue);">Total Users</div>
+            <div class="stat-value" style="color: var(--blue);">{{ $totalUsers }}</div>
             <div class="stat-sub">Registered</div>
         </div>
     @endif
@@ -135,7 +135,7 @@
 
                     <div class="car-card-body">
                         <h3>{{ $car->brand }} {{ $car->model }}</h3>
-                        <div class="plate">{{ $car->plate_number }} &middot; {{ $car->year }}</div>
+                        <div class="plate">{{ $car->plate_number }} &middot; {{ $car->year }}  &middot; {{ $car->seat_capacity }} seats</div>
                         <span class="car-card-badge badge-available">Available</span>
                         <div class="price">
                             &#8369;{{ number_format($car->price_per_day) }}

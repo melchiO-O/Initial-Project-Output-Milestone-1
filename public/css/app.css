@@ -21,6 +21,9 @@
     --gray-lt:  #888888;
     --red:      #e03c3c;
     --green:    #2ecc71;
+    --confirm:  #bdc70d;
+    --orange:   #e67e22;
+    --blue :    #3498db;
     --radius:   6px;
     --shadow:   0 4px 24px rgba(0, 0, 0, 0.4);
 }
@@ -111,7 +114,7 @@ body {
 .main-content {
     flex: 1;
     padding: 2rem;
-    max-width: 1100px;
+    max-width: 1400px;
     width: 100%;
     margin: 0 auto;
 }
@@ -203,7 +206,16 @@ body {
     transition: background 0.18s, color 0.18s, border-color 0.18s;
     white-space: nowrap;
 }
+
+.btn-return {
+    background: var(--yellow);
+    color: var(--black);
+}
+.btn-return:hover {
+    background: var(--yellow-d);
+}
 .btn-primary {
+    margin: 10px;
     background: var(--yellow);
     color: var(--black);
 }
@@ -218,6 +230,17 @@ body {
 .btn-secondary:hover {
     background: var(--gray-3);
 }
+
+.btn-cancel{
+    margin: 10px;
+    background: var(--gray-2);
+    color: var(--gray-lt);
+    border: 1px solid var(--gray-3);
+}
+.btn-cancel:hover {
+    background: var(--gray-3);
+}
+
 .btn-danger {
     background: transparent;
     color: var(--red);
@@ -226,6 +249,15 @@ body {
 .btn-danger:hover {
     background: rgba(224, 60, 60, 0.1);
 }
+.btn-success {
+    background: transparent;
+    color: var(--green);
+    border: 1px solid var(--green);
+}
+.btn-success:hover {    
+    background: rgba(46, 204, 113, 0.1);
+}
+
 .btn-sm {
     padding: 0.38rem 0.85rem;
     font-size: 0.8rem;
@@ -381,6 +413,8 @@ body {
 
 /* ----- TABLE ---------------------------------------------------- */
 .table-wrap {
+    fit-content: 100%;
+    width: 100%;
     background: var(--gray);
     border: 1px solid var(--gray-2);
     border-radius: 10px;
@@ -509,7 +543,6 @@ tbody td {
 }
 .form-actions {
     display: flex;
-    gap: 0.75rem;
     margin-top: 1.5rem;
     padding-top: 1.25rem;
     border-top: 1px solid var(--gray-2);
@@ -844,6 +877,7 @@ tbody td {
 }
 
 .rental-header h3 {
+    color: var(--yellow-d);
     margin: 0;
     font-size: 1.25rem;
 }
@@ -855,13 +889,13 @@ tbody td {
     font-weight: 600;
 }
 
-.status-active { background: #d4edda; color: #155724; }
-.status-completed { background: #d1ecf1; color: #0c5460; }
-.status-cancelled { background: #f8d7da; color: #721c24; }
-.status-overdue { background: #f8d7da; color: #dc3545; }
+.status-active { font-weight: bold; color: var(--green); }
+.status-completed { font-weight: bold; color: var(--blue); }
+.status-cancelled { font-weight: bold; color: var(--red); }
+.status-overdue { font-weight: bold; color: var(--orange); }
 
 .countdown-timer {
-    background: #f8f9fa;
+    background: var(--gray-2);
     padding: 1rem;
     border-radius: 8px;
     margin: 1rem 0;
@@ -928,13 +962,13 @@ tbody td {
 
 .details-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+    grid-template-columns: repeat(2, 1fr);
     gap: 1.5rem;
     margin-bottom: 2rem;
 }
 
 .details-card {
-    background: white;
+    background: black;
     border-radius: 12px;
     padding: 1.5rem;
     box-shadow: 0 2px 8px rgba(0,0,0,0.1);
@@ -952,6 +986,10 @@ tbody td {
     display: flex;
     flex-direction: column;
     gap: 0.75rem;
+}
+
+.info-row{
+    color: black;
 }
 
 .info-item {
@@ -982,3 +1020,14 @@ tbody td {
     gap: 1rem;
     justify-content: center;
 }
+
+/* Countdown timer */
+.countdown-timer { margin: 0.75rem 0 0.5rem; }
+.timer-label { font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.5px; color: var(--gray-lt); margin-bottom: 0.2rem; }
+.timer-display { font-size: 1rem; font-weight: 700; color: var(--yellow); }
+ 
+/* Progress bar */
+.progress-section { margin-top: 0.5rem; }
+.progress-bar { background: var(--gray-2); border-radius: 99px; height: 6px; overflow: hidden; margin: 0.3rem 0; }
+.progress-fill { background: var(--yellow); height: 100%; border-radius: 99px; transition: width 0.3s; }
+.progress-text { font-size: 0.75rem; color: var(--gray-lt); }

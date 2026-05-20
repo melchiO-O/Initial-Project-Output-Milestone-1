@@ -33,6 +33,19 @@
             @error('seat_capacity')<div class="form-error">{{ $message }}</div>@enderror
         </div>
 
+        <div class="form-group">
+            <label for="fuel_type">Fuel Type</label>
+            <select id="fuel_type" name="fuel_type" required>
+                <option value="" disabled {{ old('fuel_type') ? '' : 'selected' }}>Select fuel type...</option>
+                <option value="gasoline"  {{ old('fuel_type') === 'gasoline'  ? 'selected' : '' }}> Gasoline</option>
+                <option value="diesel"    {{ old('fuel_type') === 'diesel'    ? 'selected' : '' }}> Diesel</option>
+                <option value="electric"  {{ old('fuel_type') === 'electric'  ? 'selected' : '' }}> Electric</option>
+                <option value="hybrid"    {{ old('fuel_type') === 'hybrid'    ? 'selected' : '' }}> Hybrid</option>
+                <option value="lpg"       {{ old('fuel_type') === 'lpg'       ? 'selected' : '' }}> LPG</option>
+            </select>
+            @error('fuel_type')<div class="form-error">{{ $message }}</div>@enderror
+        </div>
+
         <div class="form-row">
             <div class="form-group">
                 <label for="plate_number">Plate Number</label>
@@ -105,7 +118,7 @@
 
         <div class="form-actions">
             <button type="submit" class="btn btn-primary">Add Car</button>
-            <a href="{{ route('cars.index') }}" class="btn btn-secondary">Cancel</a>
+            <a href="{{ route('cars.index') }}" class="btn btn-cancel">Cancel</a>
         </div>
     </form>
 </div>

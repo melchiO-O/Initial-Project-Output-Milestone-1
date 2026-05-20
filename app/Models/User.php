@@ -1,5 +1,4 @@
 <?php
-// app/Models/User.php
 
 namespace App\Models;
 
@@ -16,6 +15,8 @@ class User extends Authenticatable
         'email',
         'password',
         'role',
+        'license_number',
+        'license_expiry',
     ];
 
     protected $hidden = [
@@ -25,21 +26,33 @@ class User extends Authenticatable
 
     protected $casts = [
         'email_verified_at' => 'datetime',
+        'password'          => 'hashed',
+        'license_expiry'    => 'date',
     ];
 
-    public function isAdmin()
+    public function isAdmin(): bool
     {
         return $this->role === 'admin';
     }
 
-    // Add this relationship
+    public function isUser(): bool
+    {
+        return $this->role === 'user';
+    }
+
+    public function hasLicense(): bool
+    {
+        return !empty($this->license_number) && !empty($this->license_expiry);
+    }
+
+    public function rental()
+    {
+        // One active rental per user at a time
+        return $this->hasOne(Rental::class)->whereIn('status', ['pending', 'active']);
+    }
+
     public function rentals()
     {
         return $this->hasMany(Rental::class);
-    }
-
-    public function activeRentals()
-    {
-        return $this->hasMany(Rental::class)->where('status', 'active');
     }
 }

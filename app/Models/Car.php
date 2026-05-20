@@ -20,6 +20,7 @@ class Car extends Model
         'description',
         'image_path',
         'image_url',
+        'fuel_type',
     ];
 
     /**

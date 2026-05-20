@@ -12,7 +12,8 @@ return new class extends Migration
             $table->id();
             $table->string('brand');
             $table->string('model');
-            $table->string('seat_capacity');
+            $table->string('seat_capacity')->default(5);
+            $table->string('fuel_type')->default('gasoline');
             $table->string('plate_number')->unique();
             $table->year('year');
             $table->decimal('price_per_day', 10, 2);

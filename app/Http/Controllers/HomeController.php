@@ -19,7 +19,7 @@ class HomeController extends Controller
         $totalCars = Car::count();
         $availableCars = Car::where('status', 'available')->count();
         $brands = Car::distinct('brand')->count('brand');
-        $featuredCars = Car::where('status', 'available')->latest()->take(3)->get();
+        $featuredCars = Car::where('status', 'available')->latest()->take(4)->get();
         
         return view('home', compact('totalCars', 'availableCars', 'brands', 'featuredCars'));
     }

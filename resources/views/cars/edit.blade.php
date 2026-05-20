@@ -66,6 +66,7 @@
             </div>
         </div>
 
+        <div class="form-row">
             <div class="form-group">
                 <label for="status">Status</label>
                 <select id="status" name="status">
@@ -73,6 +74,18 @@
                     <option value="rented"    {{ old('status', $car->status) === 'rented'    ? 'selected' : '' }}>Rented</option>
                 </select>
                 @error('status')<div class="form-error">{{ $message }}</div>@enderror
+            </div>
+
+            <div class="form-group">
+                <label for="fuel_type">Fuel Type</label>
+                <select id="fuel_type" name="fuel_type" required>
+                    <option value="gasoline" {{ old('fuel_type', $car->fuel_type) === 'gasoline' ? 'selected' : '' }}>⛽ Gasoline</option>
+                    <option value="diesel"   {{ old('fuel_type', $car->fuel_type) === 'diesel'   ? 'selected' : '' }}>🛢️ Diesel</option>
+                    <option value="electric" {{ old('fuel_type', $car->fuel_type) === 'electric' ? 'selected' : '' }}>⚡ Electric</option>
+                    <option value="hybrid"   {{ old('fuel_type', $car->fuel_type) === 'hybrid'   ? 'selected' : '' }}>🔋 Hybrid</option>
+                    <option value="lpg"      {{ old('fuel_type', $car->fuel_type) === 'lpg'      ? 'selected' : '' }}>🔵 LPG</option>
+                </select>
+                @error('fuel_type')<div class="form-error">{{ $message }}</div>@enderror
             </div>
         </div>
 
@@ -123,7 +136,7 @@
 
         <div class="form-actions">
             <button type="submit" class="btn btn-primary">Save Changes</button>
-            <a href="{{ route('cars.index') }}" class="btn btn-secondary">Cancel</a>
+            <a href="{{ route('cars.index') }}" class="btn btn-cancel">Cancel</a>
         </div>
     </form>
 </div>

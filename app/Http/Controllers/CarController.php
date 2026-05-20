@@ -73,6 +73,7 @@ class CarController extends Controller
             'description'   => 'nullable|string|max:500',
             'image'         => 'nullable|image|mimes:jpg,jpeg,png,webp|max:2048',
             'image_url'     => 'nullable|url|max:500',
+            'fuel_type' => 'required|in:gasoline,diesel,electric,hybrid,lpg',
         ]);
 
         if ($request->hasFile('image')) {

@@ -1,4 +1,3 @@
-{{-- resources/views/layouts/app.blade.php --}}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -11,42 +10,39 @@
 </head>
 <body>
 
-{{-- ===== NAVBAR ===== --}}
 <nav class="navbar">
     <a href="{{ auth()->check() ? route('dashboard') : url('/') }}" class="nav-brand">fast<span>LANE</span></a>
 
     <ul class="nav-links">
         @auth
-            {{-- Dashboard --}}
             <li>
                 <a href="{{ route('dashboard') }}" class="{{ request()->routeIs('dashboard') ? 'active' : '' }}">
                     Dashboard
                 </a>
             </li>
 
-            {{-- View Cars --}}
             <li>
                 <a href="{{ route('cars.index') }}" class="{{ request()->routeIs('cars.index') ? 'active' : '' }}">
                     Browse Cars
                 </a>
             </li>
 
-            {{-- My Rentals - Only for regular users (non-admin) --}}
+            {{-- My Rentals — regular users only --}}
             @if(!auth()->user()->isAdmin())
                 <li>
-                    <a href="{{ route('rentals.index') }}" class="{{ request()->routeIs('rentals.index') ? 'active' : '' }}">
+                    <a href="{{ route('rentals.index') }}" class="{{ request()->routeIs('rentals.*') ? 'active' : '' }}">
                         My Rentals
                         @php
-                            $activeRentalsCount = auth()->user()->rentals()->where('status', 'active')->count();
+                            $activeCount = auth()->user()->rentals()->whereIn('status', ['pending','active'])->count();
                         @endphp
-                        @if($activeRentalsCount > 0)
-                            <span class="badge">{{ $activeRentalsCount }}</span>
+                        @if($activeCount > 0)
+                            <span class="badge">{{ $activeCount }}</span>
                         @endif
                     </a>
                 </li>
             @endif
 
-            {{-- Admin Links --}}
+            {{-- Admin links --}}
             @if(auth()->user()->isAdmin())
                 <li>
                     <a href="{{ route('cars.create') }}" class="{{ request()->routeIs('cars.create') ? 'active' : '' }}">
@@ -60,7 +56,15 @@
                 </li>
             @endif
 
-            {{-- Logout --}}
+            {{-- Profile --}}
+            @if(auth()->user()->isUser())
+            <li>
+                <a href="{{ route('profile.edit') }}" class="{{ request()->routeIs('profile.*') ? 'active' : '' }}">
+                    Profile
+                </a>
+            </li>
+            @endif
+
             <li>
                 <form method="POST" action="{{ route('logout') }}">
                     @csrf
@@ -68,48 +72,41 @@
                 </form>
             </li>
         @else
-            {{-- Non-authenticated links --}}
             <li>
-                <a href="{{ url('/') }}" class="{{ request()->is('/') ? 'active' : '' }}">
-                    Home
-                </a>
+                <a href="{{ url('/') }}" class="{{ request()->is('/') ? 'active' : '' }}">Home</a>
             </li>
             <li>
-                <a href="{{ route('login') }}" class="{{ request()->routeIs('login') ? 'active' : '' }}">
-                    Login
-                </a>
+                <a href="{{ route('login') }}" class="{{ request()->routeIs('login') ? 'active' : '' }}">Login</a>
             </li>
             <li>
-                <a href="{{ route('register') }}" class="{{ request()->routeIs('register') ? 'active' : '' }}">
-                    Register
-                </a>
+                <a href="{{ route('register') }}" class="{{ request()->routeIs('register') ? 'active' : '' }}">Register</a>
             </li>
         @endauth
     </ul>
 </nav>
 
-{{-- ===== MAIN CONTENT ===== --}}
 <main class="main-content">
-    {{-- Flash messages --}}
     @if(session('success'))
         <div class="alert alert-success">{{ session('success') }}</div>
     @endif
     @if(session('error'))
         <div class="alert alert-error">{{ session('error') }}</div>
     @endif
+    @if(session('status') === 'profile-updated')
+        <div class="alert alert-success">Profile updated successfully!</div>
+    @endif
 
     @yield('content')
 </main>
 
-{{-- ===== FOOTER ===== --}}
 <footer class="footer">
     <p>&copy; {{ date('Y') }} fastLANE Car Rental. All rights reserved.</p>
 </footer>
 
 <style>
 .badge {
-    background-color: #ff6b35;
-    color: white;
+    background-color: #f5c400;
+    color: #0a0a0a;
     border-radius: 50%;
     padding: 2px 6px;
     font-size: 0.7rem;
@@ -117,8 +114,10 @@
     display: inline-block;
     min-width: 18px;
     text-align: center;
+    font-weight: 700;
 }
 </style>
 
+@stack('scripts')
 </body>
 </html>

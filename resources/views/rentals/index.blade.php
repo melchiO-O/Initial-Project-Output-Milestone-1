@@ -1,36 +1,43 @@
-{{-- resources/views/rentals/index.blade.php --}}
 @extends('layouts.app')
 @section('title', 'My Rentals')
 
 @section('content')
+
 <div class="page-header">
     <h1>My Rentals</h1>
-    <p>Track your active and past rentals</p>
+    <p>Track your active and past rentals.</p>
 </div>
 
-@if(session('success'))
-    <div class="alert alert-success">{{ session('success') }}</div>
+@if(!auth()->user()->hasLicense())
+    <div class="alert alert-error">
+        ⚠️ You have not added your driver's license yet.
+        <a href="{{ route('profile.edit') }}" style="color:inherit;font-weight:700;text-decoration:underline;">
+            Add it here
+        </a>
+        before renting a car.
+    </div>
 @endif
 
+{{-- Active / Pending Rentals --}}
 @if($activeRentals->count() > 0)
     <div class="section-header">
         <h2>Active Rentals</h2>
     </div>
-    
+
     <div class="rentals-grid">
         @foreach($activeRentals as $rental)
-            <div class="rental-card active">
+            <div class="rental-card">
                 <div class="rental-header">
                     <h3>{{ $rental->car->brand }} {{ $rental->car->model }}</h3>
-                    <span class="status-badge status-{{ $rental->status }}">
+                    <span class="rental-status status-{{ $rental->status }}">
                         {{ ucfirst($rental->status) }}
                     </span>
                 </div>
-                
+
                 <div class="rental-info">
                     <div class="info-row">
-                        <span class="label">Plate Number:</span>
-                        <span class="value">{{ $rental->car->plate_number }}</span>
+                        <span class="label">Plate:</span>
+                        <span class="value mono">{{ $rental->car->plate_number }}</span>
                     </div>
                     <div class="info-row">
                         <span class="label">Pickup:</span>
@@ -41,87 +48,100 @@
                         <span class="value">{{ $rental->return_datetime->format('M d, Y h:i A') }}</span>
                     </div>
                     <div class="info-row">
-                        <span class="label">Total Price:</span>
-                        <span class="value">₱{{ number_format($rental->total_price, 2) }}</span>
+                        <span class="label">Down Payment:</span>
+                        <span class="value" style="color:var(--green);font-weight:600;">
+                            ₱{{ number_format($rental->payment->down_payment, 2) }}
+                        </span>
+                    </div>
+                    <div class="info-row">
+                        <span class="label">Balance on Return:</span>
+                        <span class="value">₱{{ number_format($rental->payment->remaining_balance, 2) }}</span>
                     </div>
                 </div>
-                
+
                 {{-- Countdown Timer --}}
-                <div class="countdown-timer" data-return-time="{{ $rental->return_datetime }}">
-                    <div class="timer-label">Time Remaining:</div>
-                    <div class="timer-display" id="timer-{{ $rental->id }}">
-                        Calculating...
+                @if($rental->status === 'active')
+                    <div class="countdown-timer" data-return-time="{{ $rental->return_datetime }}">
+                        <div class="timer-label">Time Remaining:</div>
+                        <div class="timer-display" id="timer-{{ $rental->id }}">Calculating...</div>
                     </div>
-                </div>
-                
-                {{-- Progress Bar --}}
-                <div class="progress-section">
-                    <div class="progress-label">Rental Progress</div>
-                    <div class="progress-bar">
-                        <div class="progress-fill" style="width: {{ $rental->progress_percentage }}%"></div>
+
+                    <div class="progress-section">
+                        <div class="progress-bar">
+                            <div class="progress-fill" style="width: {{ $rental->progress_percentage }}%"></div>
+                        </div>
+                        <div class="progress-text">{{ $rental->progress_percentage }}% completed</div>
                     </div>
-                    <div class="progress-text">{{ $rental->progress_percentage }}% completed</div>
-                </div>
-                
+                @endif
+
+                @if($rental->status === 'pending')
+                    <div class="license-info-box" style="margin-top:0.75rem;">
+                        <div class="license-label" style="color:orange;">⏳ Awaiting Admin Confirmation</div>
+                        <div style="font-size:0.82rem;color:var(--gray-lt);">
+                            Please pay the down payment of
+                            <strong style="color:var(--yellow);">₱{{ number_format($rental->payment->down_payment, 2) }}</strong>
+                            upon pickup. Admin will activate your rental once confirmed.
+                        </div>
+                    </div>
+                @endif
+
                 <div class="rental-actions">
-                    <a href="{{ route('rentals.show', $rental) }}" class="btn btn-secondary">View Details</a>
-                    @if($rental->status === 'active')
-                        <form action="{{ route('rentals.return', $rental) }}" method="POST" class="inline-form">
-                            @csrf
-                            @method('PUT')
-                            <button type="submit" class="btn btn-success" onclick="return confirm('Confirm return?')">
-                                Return Car
-                            </button>
-                        </form>
-                        <form action="{{ route('rentals.cancel', $rental) }}" method="POST" class="inline-form">
-                            @csrf
-                            @method('PUT')
-                            <button type="submit" class="btn btn-danger" onclick="return confirm('Cancel this rental?')">
-                                Cancel
-                            </button>
-                        </form>
-                    @endif
+                    <a href="{{ route('rentals.show', $rental) }}" class="btn btn-secondary btn-sm">
+                        View Details
+                    </a>
+                    {{-- Return and Cancel are ADMIN ONLY --}}
                 </div>
             </div>
         @endforeach
     </div>
 @endif
 
+{{-- Past Rentals --}}
 @if($pastRentals->count() > 0)
-    <div class="section-header">
+    <div class="section-header" style="margin-top:2rem;">
         <h2>Past Rentals</h2>
     </div>
-    
+
     <div class="table-wrap">
-        <table class="table">
+        <table>
             <thead>
                 <tr>
                     <th>Car</th>
-                    <th>Pickup Date</th>
-                    <th>Return Date</th>
+                    <th>Pickup</th>
+                    <th>Return</th>
                     <th>Duration</th>
-                    <th>Total Price</th>
+                    <th>Price</th>
+                    <th>Damage Fee</th>
+                    <th>Grand Total</th>
                     <th>Status</th>
-                    <th>Actions</th>
+                    <th>Action</th>
                 </tr>
             </thead>
             <tbody>
                 @foreach($pastRentals as $rental)
-                    <tr>
-                        <td>{{ $rental->car->brand }} {{ $rental->car->model }}</td>
-                        <td>{{ $rental->pickup_datetime->format('M d, Y') }}</td>
-                        <td>{{ $rental->return_datetime->format('M d, Y') }}</td>
-                        <td>{{ $rental->duration_hours }} hours</td>
-                        <td>₱{{ number_format($rental->total_price, 2) }}</td>
-                        <td>
-                            <span class="status-badge status-{{ $rental->status }}">
-                                {{ ucfirst($rental->status) }}
-                            </span>
-                        </td>
-                        <td>
-                            <a href="{{ route('rentals.show', $rental) }}" class="btn btn-sm btn-secondary">View</a>
-                        </td>
-                    </tr>
+                <tr>
+                    <td><strong>{{ $rental->car->brand }} {{ $rental->car->model }}</strong></td>
+                    <td>{{ $rental->pickup_datetime->format('M d, Y') }}</td>
+                    <td>{{ $rental->return_datetime->format('M d, Y') }}</td>
+                    <td><span>{{ $rental->formatted_duration }}</span></td>
+                    <td>₱{{ number_format($rental->price_per_day, 2) }}</td>
+                    <td>
+                        @if($rental->payment->damage_fee > 0)
+                            <span style="color:var(--red);">₱{{ number_format($rental->payment->damage_fee, 2) }}</span>
+                        @else
+                            <span style="color:var(--gray-lt);">—</span>
+                        @endif
+                    </td>
+                    <td><strong>₱{{ number_format($rental->grand_total, 2) }}</strong></td>
+                    <td>
+                        <span class="rental-status status-{{ $rental->status }}">
+                            {{ ucfirst($rental->status) }}
+                        </span>
+                    </td>
+                    <td>
+                        <a href="{{ route('rentals.show', $rental) }}" class="btn btn-secondary btn-sm">View</a>
+                    </td>
+                </tr>
                 @endforeach
             </tbody>
         </table>
@@ -132,7 +152,7 @@
     <div class="empty-state">
         <div class="icon">🚗</div>
         <p>You haven't rented any cars yet.</p>
-        <a href="{{ route('dashboard') }}" class="btn btn-primary">Browse Cars</a>
+        <a href="{{ route('cars.index') }}" class="btn btn-primary" style="margin-top:1rem;">Browse Cars</a>
     </div>
 @endif
 
@@ -140,39 +160,33 @@
 
 @push('scripts')
 <script>
-// Auto-updating countdown timers
 function updateAllTimers() {
     document.querySelectorAll('.countdown-timer').forEach(container => {
-        const returnTime = container.dataset.returnTime;
+        const returnTime  = container.dataset.returnTime;
         const timerDisplay = container.querySelector('.timer-display');
-        
-        if (timerDisplay) {
-            const now = new Date();
-            const returnDate = new Date(returnTime);
-            const diff = returnDate - now;
-            
-            if (diff <= 0) {
-                timerDisplay.innerHTML = '<span class="overdue">Overdue - Please return car</span>';
-                timerDisplay.style.color = '#dc3545';
-                timerDisplay.style.fontWeight = 'bold';
+        if (!timerDisplay) return;
+
+        const now        = new Date();
+        const returnDate = new Date(returnTime);
+        const diff       = returnDate - now;
+
+        if (diff <= 0) {
+            timerDisplay.innerHTML = '<span style="color:var(--red);font-weight:700;">⚠️ Overdue — Please return car</span>';
+        } else {
+            const hours   = Math.floor(diff / (1000 * 60 * 60));
+            const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+
+            if (hours > 24) {
+                const days = Math.floor(hours / 24);
+                const rem  = hours % 24;
+                timerDisplay.textContent = `${days}d ${rem}h ${minutes}m remaining`;
             } else {
-                const hours = Math.floor(diff / (1000 * 60 * 60));
-                const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
-                const seconds = Math.floor((diff % (1000 * 60)) / 1000);
-                
-                if (hours > 24) {
-                    const days = Math.floor(hours / 24);
-                    const remainingHours = hours % 24;
-                    timerDisplay.innerHTML = `${days}d ${remainingHours}h ${minutes}m remaining`;
-                } else {
-                    timerDisplay.innerHTML = `${hours}h ${minutes}m ${seconds}s remaining`;
-                }
+                timerDisplay.textContent = `${hours}h ${minutes}m ${seconds}s remaining`;
             }
         }
     });
 }
-
-// Update timers every second
 setInterval(updateAllTimers, 1000);
 updateAllTimers();
 </script>

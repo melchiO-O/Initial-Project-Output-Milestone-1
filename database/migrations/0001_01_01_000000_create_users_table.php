@@ -18,6 +18,9 @@ return new class extends Migration
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->string('role')->default('user'); // 'admin' or 'user'
+            // Driver's license — enforces 1:1 user to rental
+            $table->string('license_number')->nullable()->unique();
+            $table->date('license_expiry')->nullable();
             $table->rememberToken();
             $table->timestamps();
         });
